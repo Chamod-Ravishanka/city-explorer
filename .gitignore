@@ -8,3 +8,5 @@ Thumbs.db
 npm-debug.log*
 dist/
 build/
+
+config.local.js
