@@ -1,0 +1,31 @@
+{
+  "name": "city-explorer",
+  "version": "1.0.0",
+  "description": "City Explorer - A Real-Time City Insights Dashboard",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
+  "keywords": [
+    "city",
+    "weather",
+    "api",
+    "mongodb",
+    "oauth"
+  ],
+  "author": "Sachin Madusanka, Chamod Ravishanka, Pramuda Heshan",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mongoose": "^8.0.3",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

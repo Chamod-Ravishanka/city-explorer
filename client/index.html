@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Explorer - Real-Time City Insights Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-globe-americas"></i>
+            <h1>City Explorer</h1>
+        </div>
+        <nav class="nav">
+            <a href="#search-section" class="nav-link active"><i class="fas fa-search"></i> Search</a>
+            <a href="#records-section" class="nav-link"><i class="fas fa-database"></i> Records</a>
+        </nav>
+        <div class="user-section">
+            <div id="login-btn" class="btn btn-primary">
+                <i class="fab fa-google"></i> Login with Google
+            </div>
+            <div id="user-info" class="user-info hidden">
+                <img id="user-photo" src="" alt="User Photo" class="user-photo">
+                <span id="user-name"></span>
+                <button id="logout-btn" class="btn btn-secondary">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Search Section -->
+        <section id="search-section" class="section">
+            <!-- Hero Banner -->
+            <div class="hero-banner">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1><i class="fas fa-globe-americas"></i> City Explorer</h1>
+                    <p>Discover Real-Time Insights About Cities Worldwide</p>
+                    <div class="hero-features">
+                        <span><i class="fas fa-cloud-sun"></i> Live Weather</span>
+                        <span><i class="fas fa-users"></i> Population Data</span>
+                        <span><i class="fas fa-flag"></i> Country Info</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="search-container">
+                <h2><i class="fas fa-search-location"></i> Search Any City</h2>
+                <p class="subtitle">Aggregating data from GeoDB Cities, OpenWeatherMap & RestCountries APIs</p>
+                
+                <div class="search-box">
+                    <input type="text" id="city-input" placeholder="Enter city name (e.g., London, Tokyo, New York)">
+                    <button id="search-btn" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+                
+                <div id="suggestions" class="suggestions hidden"></div>
+                
+                <!-- Loading Spinner -->
+                <div id="loading" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p>Fetching data from APIs...</p>
+                </div>
+            </div>
+
+            <!-- Results Dashboard -->
+            <div id="results" class="results-dashboard hidden">
+                <!-- City Card -->
+                <div class="card city-card">
+                    <div class="card-header">
+                        <img id="country-flag" src="" alt="Country Flag" class="country-flag">
+                        <div>
+                            <h3 id="city-name">City Name</h3>
+                            <p id="city-region">Region, Country</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="stat">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <span class="stat-label">Population</span>
+                                <span id="city-population" class="stat-value">0</span>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <span class="stat-label">Coordinates</span>
+                                <span id="city-coords" class="stat-value">0, 0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Card -->
+                <div class="card weather-card">
+                    <div class="card-header">
+                        <img id="weather-icon" src="" alt="Weather Icon" class="weather-icon">
+                        <div>
+                            <h3>Current Weather</h3>
+                            <p id="weather-description">Weather description</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="temperature">
+                            <span id="temperature" class="temp-value">0</span>
+                            <span class="temp-unit">°C</span>
+                        </div>
+                        <div class="weather-details">
+                            <div class="weather-stat">
+                                <i class="fas fa-thermometer-half"></i>
+                                <span>Feels like: <strong id="feels-like">0°C</strong></span>
+                            </div>
+                            <div class="weather-stat">
+                                <i class="fas fa-tint"></i>
+                                <span>Humidity: <strong id="humidity">0%</strong></span>
+                            </div>
+                            <div class="weather-stat">
+                                <i class="fas fa-wind"></i>
+                                <span>Wind: <strong id="wind-speed">0 m/s</strong></span>
+                            </div>
+                            <div class="weather-stat">
+                                <i class="fas fa-compress-arrows-alt"></i>
+                                <span>Pressure: <strong id="pressure">0 hPa</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Country Info Card -->
+                <div class="card country-card">
+                    <div class="card-header">
+                        <i class="fas fa-flag"></i>
+                        <div>
+                            <h3 id="country-name">Country Name</h3>
+                            <p id="country-official">Official Name</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="country-detail">
+                            <i class="fas fa-landmark"></i>
+                            <span>Capital: <strong id="country-capital">Capital</strong></span>
+                        </div>
+                        <div class="country-detail">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>Currency: <strong id="country-currency">Currency</strong></span>
+                        </div>
+                        <div class="country-detail">
+                            <i class="fas fa-language"></i>
+                            <span>Languages: <strong id="country-languages">Languages</strong></span>
+                        </div>
+                        <div class="country-detail">
+                            <i class="fas fa-globe"></i>
+                            <span>Continent: <strong id="country-continent">Continent</strong></span>
+                        </div>
+                        <div class="country-detail">
+                            <i class="fas fa-clock"></i>
+                            <span>Timezone: <strong id="country-timezone">Timezone</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save Button -->
+                <div class="save-section">
+                    <button id="save-btn" class="btn btn-success">
+                        <i class="fas fa-save"></i> Save to Database
+                    </button>
+                    <span id="save-status" class="save-status"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Records Section -->
+        <section id="records-section" class="section hidden">
+            <div class="records-container">
+                <div class="records-header">
+                    <h2><i class="fas fa-database"></i> Saved Records</h2>
+                    <div class="records-filter">
+                        <button id="filter-all" class="btn btn-filter active">All Records</button>
+                        <button id="filter-mine" class="btn btn-filter">My Records</button>
+                    </div>
+                </div>
+                
+                <div id="records-loading" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p>Loading records...</p>
+                </div>
+                
+                <div id="records-list" class="records-list"></div>
+                
+                <div id="no-records" class="no-records hidden">
+                    <i class="fas fa-inbox"></i>
+                    <p>No records found</p>
+                </div>
+
+                <!-- Pagination -->
+                <div id="pagination" class="pagination hidden">
+                    <button id="prev-page" class="btn btn-secondary"><i class="fas fa-chevron-left"></i></button>
+                    <span id="page-info">Page 1 of 1</span>
+                    <button id="next-page" class="btn btn-secondary"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+        <i class="toast-icon"></i>
+        <span class="toast-message"></span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 City Explorer | Real-Time City Insights Dashboard</p>
+        <p>Developed by: Sachin Madusanka | Chamod Ravishanka | Pramuda Heshan | Pamudu Anupama</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

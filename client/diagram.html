@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Architecture Diagram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+        .diagram {
+            max-width: 800px;
+        }
+        .title {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #1e293b;
+        }
+        .layer {
+            margin-bottom: 20px;
+        }
+        .layer-title {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .boxes {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .box {
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-width: 140px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .api-box {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+        }
+        .frontend-box {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+            color: white;
+            min-width: 300px;
+            padding: 20px 40px;
+        }
+        .backend-box {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            min-width: 300px;
+            padding: 20px 40px;
+        }
+        .db-box {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            min-width: 200px;
+            padding: 20px 40px;
+        }
+        .box-subtitle {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            font-weight: normal;
+            margin-top: 5px;
+        }
+        .arrow {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #94a3b8;
+            margin: 10px 0;
+        }
+        .arrow-label {
+            font-size: 0.7rem;
+            color: #64748b;
+            display: block;
+            margin-top: -5px;
+        }
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+        }
+        .data-flow {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 15px 0;
+        }
+        .flow-item {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+        .flow-item i {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="diagram">
+        <div class="title">System Architecture - City Explorer</div>
+        
+        <!-- Public APIs Layer -->
+        <div class="layer">
+            <div class="layer-title">External Public APIs</div>
+            <div class="boxes">
+                <div class="box api-box">
+                    GeoDB Cities
+                    <div class="box-subtitle">City & Population Data</div>
+                </div>
+                <div class="box api-box">
+                    OpenWeatherMap
+                    <div class="box-subtitle">Weather Data</div>
+                </div>
+                <div class="box api-box">
+                    RestCountries
+                    <div class="box-subtitle">Country Info</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="arrow">
+            ▼ ▼ ▼
+            <span class="arrow-label">AJAX Requests (Fetch API)</span>
+        </div>
+        
+        <!-- Frontend Layer -->
+        <div class="layer">
+            <div class="layer-title">Client Layer</div>
+            <div class="boxes">
+                <div class="box frontend-box">
+                    Web Client (Frontend)
+                    <div class="box-subtitle">HTML / JavaScript / CSS</div>
+                    <div class="security-badges">
+                        <span class="badge">Data Aggregation</span>
+                        <span class="badge">Promise.all()</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="arrow">
+            ▼
+            <span class="arrow-label">HTTP POST - Aggregated JSON + API Key Header</span>
+        </div>
+        
+        <!-- Backend Layer -->
+        <div class="layer">
+            <div class="layer-title">Server Layer</div>
+            <div class="boxes">
+                <div class="box backend-box">
+                    Web Service (Backend)
+                    <div class="box-subtitle">Node.js / Express.js</div>
+                    <div class="security-badges">
+                        <span class="badge">OAuth 2.0</span>
+                        <span class="badge">API Key Auth</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="arrow">
+            ▼
+            <span class="arrow-label">Mongoose ODM</span>
+        </div>
+        
+        <!-- Database Layer -->
+        <div class="layer">
+            <div class="layer-title">Data Layer</div>
+            <div class="boxes">
+                <div class="box db-box">
+                    MongoDB Database
+                    <div class="box-subtitle">Collection: searches</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
