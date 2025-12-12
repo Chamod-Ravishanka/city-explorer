@@ -8,7 +8,7 @@ const App = {
     currentUser: null,
     currentCityData: null,
     currentPage: 1,
-    filterMode: 'all',
+    filterMode: 'mine',
     searchTimeout: null,
     
     // DOM Elements
@@ -76,8 +76,7 @@ const App = {
             recordsList: document.getElementById('records-list'),
             recordsLoading: document.getElementById('records-loading'),
             noRecords: document.getElementById('no-records'),
-            filterAll: document.getElementById('filter-all'),
-            filterMine: document.getElementById('filter-mine'),
+
             pagination: document.getElementById('pagination'),
             prevPage: document.getElementById('prev-page'),
             nextPage: document.getElementById('next-page'),
@@ -111,9 +110,7 @@ const App = {
             link.addEventListener('click', (e) => this.handleNavigation(e));
         });
         
-        // Records filter events
-        this.elements.filterAll.addEventListener('click', () => this.setFilter('all'));
-        this.elements.filterMine.addEventListener('click', () => this.setFilter('mine'));
+
         
         // Pagination events
         this.elements.prevPage.addEventListener('click', () => this.changePage(-1));
@@ -423,18 +420,7 @@ const App = {
         }
     },
     
-    /**
-     * Set records filter
-     */
-    setFilter(mode) {
-        this.filterMode = mode;
-        this.currentPage = 1;
-        
-        this.elements.filterAll.classList.toggle('active', mode === 'all');
-        this.elements.filterMine.classList.toggle('active', mode === 'mine');
-        
-        this.loadRecords();
-    },
+
     
     /**
      * Load records from database
